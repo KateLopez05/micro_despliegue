@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  proyecto-microservicio:
+    container_name: proyecto-microservicio
+    image: proyecto-microservicio:v1
+    build:
+      context: .
+    ports:
+      - "4001"
+    networks:
+      - proyectos-monolitico-network
+
+  proyecto-microservicio-2:
+    container_name: proyecto-microservicio-2
+    image: proyecto-microservicio:v1
+    ports:
+      - "4001"
+    networks:
+      - proyectos-monolitico-network
+
+  proyecto-microservicio-3:
+    container_name: proyecto-microservicio-3
+    image: proyecto-microservicio:v1
+    ports:
+      - "4001"
+    networks:
+      - proyectos-monolitico-network
+ 
+  balanceador:
+    container_name: balanceador
+    image: balanceador:v1
+    build:
+      context: ./balanceador
+    ports:
+      - "4002:80"
+    networks:
+      - proyectos-monolitico-network
+
+networks:
+  proyectos-monolitico-network:
